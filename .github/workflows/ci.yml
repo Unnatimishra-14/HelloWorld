@@ -29,6 +29,6 @@ jobs:
       - name: Export Workflow Trace
         uses: inception-health/otel-export-trace-action@latest
         with:
-          otlpEndpoint: 'https://tempo-prod-19-prod-ap-south-1.grafana.net'
+          otlpEndpoint: 'https://unnatim521.grafana.net/d/adu6xl8ydl1j4e/new-dashboard?folderUid=fdtvqu6eg10cgb&tab=queries&from=2024-08-08T02:58:29.840Z&to=2024-08-08T08:58:29.840Z'
           otlpHeaders: 'Authorization=Bearer ${{ secrets.GRAFANA_API_KEY }}'
           githubToken: ${{ secrets.GITHUB_TOKEN }}
