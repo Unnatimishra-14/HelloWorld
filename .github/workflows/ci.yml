@@ -1,0 +1,36 @@
+name: Hello world CI 
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+
+    - name: Build
+      run: go build -v ./...
+
+
+  otel-export-trace:
+    needs: [build]
+    if: always()
+    name: OpenTelemetry Export Trace
+    runs-on: ubuntu-latest
+    steps:
+      - name: Export Workflow Trace
+        uses: inception-health/otel-export-trace-action@latest
+        with:
+          otlpEndpoint: 'https://unnatim521.grafana.ne:443'
+          otlpHeaders: 'x-grafana-team=${{ secrets.GRAFANA_API_KEY }}'
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+        
