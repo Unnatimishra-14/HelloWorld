@@ -1,4 +1,4 @@
-name: Hello world CI 
+name: Hello world CI
 
 on:
   push:
@@ -20,7 +20,6 @@ jobs:
     - name: Build
       run: go build -v ./...
 
-
   otel-export-trace:
     needs: [build]
     if: always()
@@ -30,7 +29,6 @@ jobs:
       - name: Export Workflow Trace
         uses: inception-health/otel-export-trace-action@latest
         with:
-          otlpEndpoint: 'https://unnatim521.grafana.net/d/cdn9jukg55bswb/usage-insights-5-metrics-ingestion?var-instance=$__all:443'
-          otlpHeaders: 'x-grafana-team=${{ secrets.GRAFANA_API_KEY }}'
+          otlpEndpoint: 'https://tempo-prod-19-prod-ap-south-1.grafana.net/:443'
+          otlpHeaders: 'Authorization=Bearer ${{ secrets.GRAFANA_API_KEY }}'
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-        
