@@ -29,6 +29,6 @@ jobs:
       - name: Export Workflow Trace
         uses: inception-health/otel-export-trace-action@latest
         with:
-          otlpEndpoint: 'grpc://otlp-gateway-prod-ap-south-1.grafana.net/otlp'
+          otlpEndpoint: 'https://otlp-gateway-prod-ap-south-1.grafana.net/otlp'
           otlpHeaders: ${{ secrets.OTLP_HEADERS }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
