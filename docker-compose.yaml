@@ -6,5 +6,5 @@ services:
     volumes:
       - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
     ports:
-      - "4317:4317"   # OTLP gRPC receiver
-      - "4318:4318"   # OTLP HTTP receiver
+      - "4318:4318"  # OTLP HTTP receiver
+      - "55681:55681"  # OTLP HTTP receiver (legacy)

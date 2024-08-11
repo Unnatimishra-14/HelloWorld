@@ -1,24 +1,31 @@
-name: OpenTelemetry Export Trace
+name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      # Add your build steps here
-
-  otel-export-trace:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Export Workflow Trace
-        uses: inception-health/otel-export-trace-action@latest
-        with:
-          otlpEndpoint: https://cf2d-223-236-147-212.ngrok-free.app
-          otlpHeaders: ${{ secrets.OTLP_HEADERS }}
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/checkout@v2
+    
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+    
+    - name: Build
+      run: go build -v ./...
+    
+    - name: Test
+      run: go test -v ./...
+    
+    - name: Export Workflow Trace
+      uses: inception-health/otel-export-trace-action@latest
+      with:
+        otlpEndpoint: 'https://caaa-2401-4900-1c3c-34d8-570-7dc3-950e-3de8.ngrok-free.app'
+        otlpHeaders: 'Content-Type=application/json'
+        githubToken: ${{ secrets.GITHUB_TOKEN }}

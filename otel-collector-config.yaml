@@ -1,25 +1,21 @@
 receivers:
   otlp:
     protocols:
-      grpc:
-        endpoint: 0.0.0.0:4317
       http:
-        endpoint: 0.0.0.0:4318
+        endpoint: "0.0.0.0:4318"
 
 processors:
   batch:
 
 exporters:
-  logging:
-    loglevel: debug
   otlp:
-    endpoint: "https://otlp-gateway-prod-ap-south-1.grafana.net:443"
+    endpoint: "tempo-prod-19-prod-ap-south-1.grafana.net:443"
     headers:
-      Authorization: "Basic MTAwMzM2MTpnbGNfZXlKdklqb2lNVEU0T0RnNE5DSXNJbTRpT2lKemRHRmpheTB4TURBek16WXhMVzkwYkhBdGQzSnBkR1V0YjNSbGJDMXJaWGtpTENKcklqb2ljazVWTkhCNU5ERkxNelF6TURGd2VVTjNWVFo1UjNJM0lpd2liU0k2ZXlKeUlqb2ljSEp2WkMxaGNDMXpiM1YwYUMweEluMTk="
+      Authorization: "Basic OTU1NDU2OmdsY19leUp2SWpvaU1URTRPRGc0TkNJc0ltNGlPaUp6ZEdGamF5MHhNREF6TXpZeExXaDBMWEpsWVdRdGRHVnRjQzFyWlhraUxDSnJJam9pT0hsQ1ZUZExNemt6Y2pKWVV6ZFpNemN6UVdsYVRtSkdJaXdpYlNJNmV5SnlJam9pY0hKdlpDMWhjQzF6YjNWMGFDMHhJbjE5"
 
 service:
   pipelines:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [logging, otlp]
+      exporters: [otlp]
