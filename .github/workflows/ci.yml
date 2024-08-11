@@ -26,6 +26,6 @@ jobs:
     - name: Export Workflow Trace
       uses: inception-health/otel-export-trace-action@latest
       with:
-        otlpEndpoint: 'https://f016-2401-4900-1c3c-34d8-570-7dc3-950e-3de8.ngrok-free.app'
+        otlpEndpoint: 'https://079f-2401-4900-1c3c-34d8-570-7dc3-950e-3de8.ngrok-free.app'
         otlpHeaders: 'Content-Type=application/json'
         githubToken: ${{ secrets.GITHUB_TOKEN }}
