@@ -1,4 +1,4 @@
-name: CI
+name: Hello world CI 
 
 on:
   push:
@@ -10,22 +10,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    
+    - uses: actions/checkout@v3
+
     - name: Set up Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v4
       with:
-        go-version: 1.17
-    
+        go-version: '1.21'
+
     - name: Build
       run: go build -v ./...
-    
-    - name: Test
-      run: go test -v ./...
-    
-    - name: Export Workflow Trace
-      uses: inception-health/otel-export-trace-action@latest
-      with:
-        otlpEndpoint: 'https://079f-2401-4900-1c3c-34d8-570-7dc3-950e-3de8.ngrok-free.app'
-        otlpHeaders: 'Content-Type=application/json'
-        githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+
+  otel-export-trace:
+    needs: [build]
+    if: always()
+    name: OpenTelemetry Export Trace
+    runs-on: ubuntu-latest
+    steps:
+      - name: Export Workflow Trace
+        uses: inception-health/otel-export-trace-action@latest
+        with:
+          otlpEndpoint: 'tempo-prod-19-prod-ap-south-1.grafana.net:443'
+          otlpHeaders: 'Authorization=Bearer ${{ secrets.GRAFANA_API_KEY }}'
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+        
+        
